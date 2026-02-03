@@ -10,6 +10,8 @@ on:
 
 permissions:
   contents: write # to allow workflow to publish release
+  id-token: write # Required for OIDC
+
 
 jobs:
   build:
@@ -173,6 +175,9 @@ jobs:
     - run: sudo apt-get install libsecret-1-dev
       name: Install additional dependencies
 
+    - name: Update npm for OIDC support
+      run: npm i -g "npm@11.6.3"
+
     - run: npm ci
       name: Setup environment
 
@@ -183,5 +188,3 @@ jobs:
 
     - run: npm publish --access public
       name: Upload to NPM
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
