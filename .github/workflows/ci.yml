@@ -107,9 +107,9 @@ jobs:
         name: prebuild-${{ matrix.os }}
         path: prebuilds/@github
 
-    - name: Upload prebuilds to GitHub
-      run: npx prebuild --verbose --upload-all ${{ secrets.GITHUB_TOKEN }}
-      if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    # - name: Upload prebuilds to GitHub
+    #   run: npx prebuild --verbose --upload-all ${{ secrets.GITHUB_TOKEN }}
+    #   if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
 
   alpine-build:
     runs-on: ubuntu-22.04
@@ -151,9 +151,9 @@ jobs:
         name: prebuild-alpine
         path: prebuilds/@github
 
-    - name: Upload prebuilds to GitHub
-      run: npx prebuild --verbose --upload-all ${{ secrets.GITHUB_TOKEN }}
-      if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    # - name: Upload prebuilds to GitHub
+    #   run: npx prebuild --verbose --upload-all ${{ secrets.GITHUB_TOKEN }}
+    #   if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
 
   # Separate step for publishing to NPM so we're sure that generating + uploading prebuilds worked on all platforms
   npm-publish:
