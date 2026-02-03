@@ -1,18 +1,18 @@
 {
   "main": "./lib/keytar.js",
   "typings": "keytar.d.ts",
-  "name": "keytar-forked-forked",
-  "description": "Bindings to native Mac/Linux/Windows password APIs (forked)",
+  "name": "@github/keytar",
+  "description": "Bindings to native Mac/Linux/Windows password APIs",
   "version": "7.10.4-1",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devm33/node-keytar.git"
+    "url": "git+https://github.com/github/node-keytar.git"
   },
   "bugs": {
-    "url": "https://github.com/devm33/node-keytar/issues"
+    "url": "https://github.com/github/node-keytar/issues"
   },
-  "homepage": "https://github.com/devm33/node-keytar",
+  "homepage": "https://github.com/github/node-keytar",
   "keywords": [
     "keychain",
     "password",
