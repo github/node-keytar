@@ -100,12 +100,12 @@ jobs:
         rm *.tar.gz
       name: Extract prebuilds
       shell: bash
-      working-directory: prebuilds
+      working-directory: prebuilds/@github
 
     - uses: actions/upload-artifact@v4
       with:
         name: prebuild-${{ matrix.os }}
-        path: prebuilds/
+        path: prebuilds/@github
 
     - name: Upload prebuilds to GitHub
       run: npx prebuild --verbose --upload-all ${{ secrets.GITHUB_TOKEN }}
@@ -130,7 +130,7 @@ jobs:
       name: Prebuild
 
     - run: |
-        ls prebuilds/
+        ls prebuilds/@github
       name: List prebuilds
 
     - name: Upload prebuilds to GitHub
