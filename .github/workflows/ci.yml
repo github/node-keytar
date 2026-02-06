@@ -20,8 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [22.x]
-        os: [ubuntu-22.04, windows-latest, macos-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
     runs-on: ${{ matrix.os }}
 
@@ -32,11 +31,12 @@ jobs:
       with:
         node-version-file: '.node-version'
     - run: |
+        sudo apt-get update
         sudo apt-get install gnome-keyring \
                              libsecret-1-dev \
                              dbus-x11 \
                              python3-dev
-      if: ${{ matrix.os == 'ubuntu-22.04' }}
+      if: ${{ runner.os == 'Linux' }}
       name: Install additional dependencies
 
     - run: npm ci
@@ -55,11 +55,11 @@ jobs:
         echo "Create a test key using script..."
         python -c "import keyring;keyring.set_password('system', 'login', 'pwd');"
         npm test
-      if: ${{ matrix.os == 'ubuntu-22.04' }}
+      if: ${{ runner.os == 'Linux' }}
       name: Run tests (Linux)
 
     - run: npm test
-      if: ${{ matrix.os != 'ubuntu-22.04' }}
+      if: ${{ runner.os != 'Linux' }}
       name: Run tests (Windows/macOS)
 
     - run: npm run prebuild-napi-x64
@@ -67,10 +67,10 @@ jobs:
 
     - run: npm run prebuild-napi-arm64
       name: Prebuild (arm64)
-      if: ${{ matrix.os != 'ubuntu-22.04' }}
+      if: ${{ runner.os != 'Linux' }}
 
     - run: npm run prebuild-napi-ia32
-      if: ${{ matrix.os == 'windows-2019' }}
+      if: ${{ runner.os == 'Windows' }}
       name: Prebuild (Windows x86)
 
     - run: |
@@ -82,7 +82,7 @@ jobs:
         docker run --rm -v ${PWD}:/project node-keytar/arm64-cross-compile /bin/bash -c "cd /project && npm run prebuild-napi-arm && rm -rf build"
         docker build -t node-keytar/armv7l-cross-compile docker/armv7l-cross-compile
         docker run --rm -v ${PWD}:/project node-keytar/armv7l-cross-compile /bin/bash -c "cd /project && npm run prebuild-napi-armv7l"
-      if: ${{ matrix.os == 'ubuntu-22.04' }}
+      if: ${{ runner.os == 'Linux' }}
       name: Prebuild (Linux x86 + ARM64 + ARMV7L)
 
     - run: |
@@ -109,12 +109,8 @@ jobs:
         name: prebuild-${{ matrix.os }}
         path: prebuilds/@github
 
-    # - name: Upload prebuilds to GitHub
-    #   run: npx prebuild --verbose --upload-all ${{ secrets.GITHUB_TOKEN }}
-    #   if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-
   alpine-build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     container: node:22-alpine3.20
     steps:
     - uses: actions/checkout@v4
@@ -153,15 +149,11 @@ jobs:
         name: prebuild-alpine
         path: prebuilds/@github
 
-    # - name: Upload prebuilds to GitHub
-    #   run: npx prebuild --verbose --upload-all ${{ secrets.GITHUB_TOKEN }}
-    #   if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-
   # Separate step for publishing to NPM so we're sure that generating + uploading prebuilds worked on all platforms
   npm-publish:
     needs: [build, alpine-build]
     name: Publish to NPM
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
 
     steps:
@@ -172,7 +164,9 @@ jobs:
         node-version-file: '.node-version'
         registry-url: 'https://registry.npmjs.org'
 
-    - run: sudo apt-get install libsecret-1-dev
+    - run: |
+        sudo apt-get update
+        sudo apt-get install libsecret-1-dev
       name: Install additional dependencies
 
     - name: Update npm for OIDC support
