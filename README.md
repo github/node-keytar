@@ -89,6 +89,6 @@ Find a password for the `service` in the keychain. This is ideal for scenarios w
 Yields the string password, or `null` if an entry for the given service was not found.
 
 
-## License 
+## License
 
 This project is licensed under the terms of the MIT open source license. Please refer to the [LICENSE.md](./LICENSE.md) file for the full terms.
