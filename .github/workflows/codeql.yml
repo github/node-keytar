@@ -35,6 +35,7 @@ jobs:
         languages: javascript, cpp
 
     - run: |
+        sudo apt-get update
         sudo apt-get install libsecret-1-dev
       if: ${{ matrix.os == 'ubuntu-latest' }}
       name: Install additional dependencies
