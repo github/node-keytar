@@ -1,6 +1,6 @@
 name: "Code Scanning"
 
-on: pull_request
+on: [push, pull_request]
 
 permissions:
   actions: read  # for github/codeql-action/init to get workflow details
