@@ -44,7 +44,7 @@
     "prebuild-napi-arm": "prebuild -t 3 -r napi -a arm --strip"
   },
   "devDependencies": {
-    "chai": "^5.1.2",
+    "chai": "^6.2.2",
     "mocha": "^11.1.0",
     "node-cpplint": "~0.4.0",
     "node-gyp": "^11.0.0",
