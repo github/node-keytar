@@ -5,7 +5,7 @@ A native Node module to get, add, replace, and delete passwords in system's keyc
 ## Installing
 
 ```sh
-npm install keytar
+npm install @github/keytar
 ```
 
 ### On Linux
@@ -26,7 +26,7 @@ Depending on your distribution, you will need to run the following command:
 
 ## Supported versions
 
-Each release of `keytar` includes prebuilt binaries for the versions of Node and Electron that are actively supported by these projects. Please refer to the release documentation for [Node](https://github.com/nodejs/Release) and [Electron](https://electronjs.org/docs/tutorial/support) to see what is supported currently.
+Each release of `@github/keytar` includes prebuilt binaries for the versions of Node and Electron that are actively supported by these projects. Please refer to the release documentation for [Node](https://github.com/nodejs/Release) and [Electron](https://electronjs.org/docs/tutorial/support) to see what is supported currently.
 
 ## Bindings from other languages
 
@@ -34,8 +34,14 @@ Each release of `keytar` includes prebuilt binaries for the versions of Node and
 
 ## Docs
 
+
 ```javascript
-const keytar = require('keytar')
+const keytar = require('@github/keytar')
+```
+or
+
+```javascript
+import keytar from '@github/keytar'
 ```
 
 Every function in keytar is asynchronous and returns a promise. The promise will be rejected with any error that occurs or will be resolved with the function's "yields" value.
