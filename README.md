@@ -1,3 +1,6 @@
+> **Archived and deprecated**
+> This repository is archived, and the `@github/keytar` package is deprecated. This project is no longer maintained and will not receive further updates.
+
 # keytar - Node module to manage system keychain
 
 A native Node module to get, add, replace, and delete passwords in system's keychain. On macOS the passwords are managed by the Keychain, on Linux they are managed by the Secret Service API/libsecret, and on Windows they are managed by Credential Vault.
